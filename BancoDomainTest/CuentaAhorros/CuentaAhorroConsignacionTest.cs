@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace BancoDomainTest.CuentaAhorros
 {
-    public class CuentaAhorroTest
+    public class CuentaAhorroConsignacionTest
     {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
         /*
         Escenario: Valor de consignación -1
         H1: COMO Cajero del banco QUIERO realizar consignaciones a una cuenta de ahorro para salvaguardar el dinero.
@@ -23,11 +28,6 @@ namespace BancoDomainTest.CuentaAhorros
         Entonces
         El sistema presentará el mensaje. “El valor a consignar es incorrecto”
          */
-
-        [SetUp]
-        public void Setup()
-        {
-        }
 
         [Test]
         public void NoPuedeConsignarValorDeMenosUno()
@@ -78,9 +78,11 @@ namespace BancoDomainTest.CuentaAhorros
         {
             string ciudadPerteneciente = "Bogota";
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
+            
             decimal valorConsignacion = 50000;
             string ciudadConsignacion = "Bogota";
             string respuesta = cuentaAhorro.Consignar(valorConsignacion, fecha: new DateTime(2020,2,1), ciudadPerteneciente,ciudadConsignacion);
+            
             Assert.AreEqual(1, cuentaAhorro.Movimientos.Count);
             Assert.AreEqual("Su Nuevo Saldo es de 50000 pesos m/c", respuesta);
 
@@ -103,9 +105,11 @@ namespace BancoDomainTest.CuentaAhorros
         {
             string ciudadPerteneciente = "Bogota";
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
+            
             decimal valorConsignacion = 49950;
             string ciudadConsignacion = "Bogota";
             string respuesta = cuentaAhorro.Consignar(valorConsignacion, fecha: new DateTime(2020, 3, 1), ciudadPerteneciente, ciudadConsignacion);
+            
             Assert.AreEqual(0, cuentaAhorro.Movimientos.Count);
             Assert.AreEqual("El valor mínimo de la primera consignación debe ser de 50000 mil pesos. Su nuevo saldo es 0 pesos", respuesta);
 
@@ -129,6 +133,7 @@ namespace BancoDomainTest.CuentaAhorros
         {
             string ciudadPerteneciente = "Bogota";
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
+            
             decimal valorConsignacionInicial = 50000;
             string ciudadConsignacion = "Bogota";
             cuentaAhorro.Consignar(valorConsignacionInicial, fecha: new DateTime(2020, 2, 1), ciudadPerteneciente, ciudadConsignacion);

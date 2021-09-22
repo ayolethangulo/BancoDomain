@@ -48,6 +48,24 @@ namespace BancoDomain
 
         public override string Retirar(decimal valorRetiro, DateTime fecha)
         {
+            if (valorRetiro > 0 && valorRetiro <= Saldo )
+            {
+                decimal saldoMinimo = Saldo - valorRetiro;
+                if (saldoMinimo >= 20000)
+                {
+                    Saldo = saldoMinimo;
+                    _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Retiro", valor: valorRetiro));
+                    return $"El retiro ha sido exitoso, su nuevo saldo es de {Saldo} pesos m/c";
+                }
+                else
+                {
+                    return $"No puede retirar el monto. El saldo minimo de la cuenta debe ser de 20000 mil pesos m/c";
+                }
+            }
+            else
+            {
+                return $"El retiro no puede ser negativo, ni puede exceder el saldo actual";
+            }
             throw new NotImplementedException();
         }
     }
