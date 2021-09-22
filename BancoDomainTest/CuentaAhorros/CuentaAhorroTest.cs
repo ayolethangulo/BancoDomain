@@ -121,28 +121,11 @@ namespace BancoDomainTest.CuentaAhorros
         Dado El cliente tiene una cuenta de ahorro con un saldo de 30.000 //50.000
         Cuando Va a consignar el valor  de $49.950 pesos
         Entonces El sistema registrará la consignación
-        AND presentará el mensaje. “Su Nuevo Saldo es de $79.950,00 pesos m/c”.
+        AND presentará el mensaje. “Su Nuevo Saldo es de $79.950,00 pesos m/c”. //99950
          */
 
         [Test]
         public void ConsignacionPosteriorAInicialCorrecta()
-        {
-            string ciudadPerteneciente = "Bogota";
-            var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
-            decimal valorConsignacionInicial = 30000;
-            string ciudadConsignacion = "Bogota";
-            cuentaAhorro.Consignar(valorConsignacionInicial, fecha: new DateTime(2020, 2, 1), ciudadPerteneciente,ciudadConsignacion);
-
-            decimal consignacion = 49950;
-            string respuesta = cuentaAhorro.Consignar(consignacion, fecha: new DateTime(2020, 2, 1), ciudadPerteneciente, ciudadConsignacion);
-
-            Assert.AreEqual(1, cuentaAhorro.Movimientos.Count);
-            Assert.AreEqual("Su Nuevo Saldo es de 79950 pesos m/c", respuesta);
-
-        }
-
-        [Test]
-        public void ConsignacionPosteriorAInicialCorrectaValida()
         {
             string ciudadPerteneciente = "Bogota";
             var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
