@@ -13,7 +13,7 @@ namespace BancoDomain
 
         }
 
-        public string Consignar(decimal valorConsignacion, DateTime fecha, string ciudadPerteneciente, string ciudadConsignacion)
+        public virtual string Consignar(decimal valorConsignacion, DateTime fecha, string ciudadPerteneciente, string ciudadConsignacion)
         {
             if (valorConsignacion < 0)
             {

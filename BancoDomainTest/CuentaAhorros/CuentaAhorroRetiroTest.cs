@@ -45,6 +45,27 @@ namespace BancoDomainTest.CuentaAhorros
             Assert.AreEqual("El retiro ha sido exitoso, su nuevo saldo es de 20000 pesos m/c", respuestaRetiro);
 
         }
+        [Test]
+        public void PuedoHacerRetiroTreintaMilPesosCorrectoBDD()
+        {
+            #region DADO que el cliente tiene una cuenta de ahorro con un saldo de 50.001 pesos
+            string ciudadPerteneciente = "Bogota";
+            var cuentaAhorro = new CuentaAhorro(numero: "10001", nombre: "Cuenta Ejemplo", ciudadPerteneciente);
+            decimal valorConsignacionInicial = 50001;
+            string ciudadConsignacion = "Bogota";
+            cuentaAhorro.Consignar(valorConsignacionInicial, fecha: new DateTime(2020, 2, 1), ciudadPerteneciente, ciudadConsignacion);
+            #endregion
+
+            #region CUANDO efectua un valor de 30.000 pesos
+            decimal valorRetiro = 30000;
+            string respuestaRetiro = cuentaAhorro.Retirar(valorRetiro, fecha: new DateTime(2020, 2, 1));
+            #endregion
+
+            #region ENTONCES el sistema presentará el mensaje. "Su nuevo saldo es de 20.0001 pesos m/c"
+            Assert.AreEqual("El retiro ha sido exitoso, su nuevo saldo es de 20001 pesos m/c", respuestaRetiro);
+            #endregion
+           
+        }
 
         /*
         Escenario: Valor a retirar Incorrecto
