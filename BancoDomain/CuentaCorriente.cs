@@ -24,8 +24,7 @@ namespace BancoDomain
             }
             else if(!_movimientos.Any() && valorConsignacion >= 100000)
             {
-                _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Consignacion", valor: valorConsignacion));
-                Saldo += valorConsignacion;
+                AddMovimientoAumentarSaldo(valorConsignacion, fecha, "Consignacion");
                 return $"Su Nuevo saldo es de {Saldo} pesos m/c";
             }
             throw new NotImplementedException();
@@ -37,9 +36,8 @@ namespace BancoDomain
             var saldoTemporal = Saldo - valorRetiro - cuatroXMil;
             if (saldoTemporal > Sobregiro)
             {
-                _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Retiro", valor: valorRetiro));
-                _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Impuesto4xMil", valor: cuatroXMil));
-                Saldo = saldoTemporal;            
+                AddMovimientoDisminuyeSaldo(valorRetiro, fecha, "Retiro");
+                AddMovimientoDisminuyeSaldo(cuatroXMil, fecha, "Impuesto4xMil");
                 return $"Su Nuevo Saldo es de {Saldo} pesos m/c";
             }
             throw new NotImplementedException();

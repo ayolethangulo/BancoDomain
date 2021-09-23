@@ -21,8 +21,7 @@ namespace BancoDomain
             }
             if (!_movimientos.Any() && valorConsignacion >= 50000)
             {
-                _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Consignacion", valor: valorConsignacion));
-                Saldo += valorConsignacion;
+                AddMovimientoAumentarSaldo(valorConsignacion, fecha, "Consignacion");
                 return $"Su Nuevo Saldo es de {Saldo} pesos m/c";
             }
             else if (!_movimientos.Any() && valorConsignacion < 50000)
@@ -33,13 +32,12 @@ namespace BancoDomain
             {
                 if (ciudadPerteneciente != ciudadConsignacion)
                 {
-                    _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Consignacion", valor: valorConsignacion));
-                    Saldo += valorConsignacion-10000;
+                    AddMovimientoAumentarSaldo(valorConsignacion, fecha, "Consignacion");
+                    AddMovimientoDisminuyeSaldo(10000, fecha, "Costo nacional");
                 }
                 else
                 {
-                    _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Consignacion", valor: valorConsignacion));
-                    Saldo += valorConsignacion;
+                    AddMovimientoAumentarSaldo(valorConsignacion, fecha, "Consignacion");
                 }
                 return $"Su Nuevo Saldo es de {Saldo} pesos m/c";
             }
@@ -53,8 +51,7 @@ namespace BancoDomain
                 decimal saldoMinimo = Saldo - valorRetiro;
                 if (saldoMinimo >= 20000)
                 {
-                    Saldo = saldoMinimo;
-                    _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo: "Retiro", valor: valorRetiro));
+                    AddMovimientoDisminuyeSaldo(valorRetiro, fecha, "Retiro");
                     return $"El retiro ha sido exitoso, su nuevo saldo es de {Saldo} pesos m/c";
                 }
                 else

@@ -177,7 +177,7 @@ namespace BancoDomainTest.CuentaAhorros
             ciudadConsignacion = "Valledupar";
              string respuesta = cuentaAhorro.Consignar(consignacion, fecha: new DateTime(2020, 2, 1), ciudadPerteneciente, ciudadConsignacion);
 
-             Assert.AreEqual(2, cuentaAhorro.Movimientos.Count);
+             Assert.AreEqual(3, cuentaAhorro.Movimientos.Count);
              Assert.AreEqual("Su Nuevo Saldo es de 89950 pesos m/c", respuesta);
 
          }

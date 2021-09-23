@@ -9,7 +9,7 @@ namespace BancoDomain.CuentaBancaria
         
         public string Numero { get; private set; }
         public string Nombre { get; private set; }
-        public decimal Saldo { get; protected set; }
+        public decimal Saldo { get; private set; }
         public string Ciudad { get; private set; }
 
         protected List<Movimiento> _movimientos;
@@ -29,5 +29,18 @@ namespace BancoDomain.CuentaBancaria
         }
 
         public abstract string Retirar(decimal valorRetiro, DateTime fecha);
+
+        protected void AddMovimientoDisminuyeSaldo(decimal valor, DateTime fecha, string tipo)
+        {
+            _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo, valor: valor));
+            Saldo -= valor;
+        }
+
+        protected void AddMovimientoAumentarSaldo(decimal valor, DateTime fecha, string tipo)
+        {
+            _movimientos.Add(new Movimiento(cuentaBancaria: this, fecha: fecha, tipo, valor: valor));
+            Saldo += valor;
+        }
+
     }
 }
